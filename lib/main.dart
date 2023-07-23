@@ -40,6 +40,21 @@ class MyHomePage extends StatelessWidget {
           Text('A random idea:'),
           Text('first hot reload project test'),
           Text(appState.current.asLowerCase),
+
+          // ↓ Add this.
+          ElevatedButton(
+            onPressed: () {
+              print('button pressed NEXT!');  // print to Debug console (terminal)
+            },
+            child: Text('Next'),
+          ),
+
+          ElevatedButton(
+            onPressed: (){
+              print('button pressed PREV!');
+            }, 
+            child: Text('Prev')
+          ),
         ],
       ),
     );
