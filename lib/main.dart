@@ -38,6 +38,7 @@ class MyHomePage extends StatelessWidget {
       body: Column(
         children: [
           Text('A random idea:'),
+          Text('first hot reload project test'),
           Text(appState.current.asLowerCase),
         ],
       ),
