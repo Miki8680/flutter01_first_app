@@ -51,7 +51,7 @@ class MyHomePage extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               print('button pressed NEXT!');  // print to Debug console (terminal)
-              
+
               appState.getNext();
             },
             child: Text('Next'),
@@ -72,6 +72,14 @@ class BigCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(pair.asLowerCase);
+    final theme = Theme.of(context);
+
+    return Card(
+      color: theme.colorScheme.primary,
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Text(pair.asLowerCase),
+      ),
+    );
   }
 }
