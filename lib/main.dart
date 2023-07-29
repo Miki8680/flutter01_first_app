@@ -28,9 +28,20 @@ class MyApp extends StatelessWidget {
 class MyAppState extends ChangeNotifier {
   var current = WordPair.random();
 
-  // ↓ Add this.
   void getNext() {
     current = WordPair.random();
+    notifyListeners();
+  }
+
+  // ↓ Add the code below.
+  var favorites = <WordPair>[];
+
+  void toggleFavorite() {
+    if (favorites.contains(current)) {
+      favorites.remove(current);
+    } else {
+      favorites.add(current);
+    }
     notifyListeners();
   }
 }
@@ -40,6 +51,14 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var pair = appState.current;     
+
+    // ↓ Add this.
+    IconData icon;
+    if (appState.favorites.contains(pair)) {
+      icon = Icons.favorite;
+    } else {
+      icon = Icons.favorite_border;
+    }
 
     return Scaffold(
       body: Center(
@@ -52,13 +71,28 @@ class MyHomePage extends StatelessWidget {
 
             SizedBox(height: 10,),
       
-            ElevatedButton(
-              onPressed: () {
-                print('button pressed NEXT!');  // print to Debug console (terminal)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // ↓ And this.
+                ElevatedButton.icon(
+                  onPressed: () {
+                    appState.toggleFavorite();
+                  },
+                  icon: Icon(icon),
+                  label: Text('Like'),
+                ),
+                SizedBox(width: 10),
+
+                ElevatedButton(
+                  onPressed: () {
+                    print('button pressed NEXT!');  // print to Debug console (terminal)
       
-                appState.getNext();
-              },
-              child: Text('Next'),
+                    appState.getNext();
+                  },
+                  child: Text('Next'),
+                ),
+              ],
             ),
           ],
         ),
