@@ -46,65 +46,15 @@ class MyAppState extends ChangeNotifier {
   }
 }
 
-/*
-//old
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    var pair = appState.current;     
-
-    // ↓ Add this.
-    IconData icon;
-    if (appState.favorites.contains(pair)) {
-      icon = Icons.favorite;
-    } else {
-      icon = Icons.favorite_border;
-    }
-
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Text('A random idea:'),
-            // Text('first hot reload project test'),
-            BigCard(pair: pair),
-
-            SizedBox(height: 10,),
-      
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // ↓ And this.
-                ElevatedButton.icon(
-                  onPressed: () {
-                    appState.toggleFavorite();
-                  },
-                  icon: Icon(icon),
-                  label: Text('Like'),
-                ),
-                SizedBox(width: 10),
-
-                ElevatedButton(
-                  onPressed: () {
-                    print('button pressed NEXT!');  // print to Debug console (terminal)
-      
-                    appState.getNext();
-                  },
-                  child: Text('Next'),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  State<MyHomePage> createState() => _MyHomePageState();
 }
-*/
 
-class MyHomePage extends StatelessWidget {
+class _MyHomePageState extends State<MyHomePage> {
+
+  var selectedIndex = 0;     // ← Add this property.
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,9 +73,14 @@ class MyHomePage extends StatelessWidget {
                   label: Text('Favorites'),
                 ),
               ],
-              selectedIndex: 0,
+              selectedIndex: selectedIndex,
               onDestinationSelected: (value) {
                 print('selected: $value');
+
+                setState(() {
+                  selectedIndex = value;
+                });
+
               },
             ),
           ),
